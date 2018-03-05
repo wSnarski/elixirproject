@@ -1,6 +1,21 @@
 require IEx;
 
-defmodule Router do
+defmodule Example do
+  use Application
+  require Logger
+
+  def start(_type, _args) do
+    children = [
+      Plug.Adapters.Cowboy.child_spec(:http, Example.TestPlug, [], port: 4000)
+    ]
+
+    Logger.info("Started application")
+
+    Supervisor.start_link(children, strategy: :one_for_one)
+  end
+end
+
+defmodule Example.Router do
   defmacro __using__(_opts) do
     quote do
       def init(options) do
@@ -13,8 +28,9 @@ defmodule Router do
   end
 end
 
-defmodule Webserver do
-  use Router
+defmodule Example.TestPlug do
+  import Plug.Conn
+  use Example.Router
   @moduledoc """
   Documentation for Webserver.
   """

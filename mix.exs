@@ -15,8 +15,7 @@ defmodule Webserver.Mixfile do
   # Type "mix help compile.app" for more information
   def application do
     # Specify extra applications you'll use from Erlang/Elixir
-    [applications: [:logger, :sqlite_ecto, :ecto, :cowboy, :plug]]
-    [extra_applications: [:logger]]
+    [extra_applications: [:logger, :sqlite_ecto, :ecto, :cowboy, :plug], mod: {Example, []}]
   end
 
   # Dependencies can be Hex packages:
